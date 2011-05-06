@@ -25,4 +25,10 @@ class TestWWW < Test::Unit::TestCase
     get "http://example.com"
     assert last_response.redirect?
   end
+
+  def test_right_location_when_redirects
+    get "http://example.com/"
+    assert_equal "http://www.example.com/", last_response.headers['Location']
+  end
+
 end

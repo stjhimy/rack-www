@@ -15,6 +15,8 @@ module Rack
       if already_www?(host)
         [status, headers, body]
       else
+        url = URI(req.url).scheme + "://www." + host + URI(req.path).to_s
+        headers = headers.merge('Location' => url)
         [301, headers, body]
       end
     end
