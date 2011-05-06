@@ -4,11 +4,12 @@ Redirects all trafic from http://example.com to http://www.example.com
 
 === Installation
 
-  gem install rack-www
+  gem install rack-www #default installation
+  gem 'rack-www' #when using bundler
 
 === Usage
 
-  config.middleware.use Rack:WWW
+  config.middleware.use Rack::WWW
 
 === License
 
