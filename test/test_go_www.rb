@@ -20,4 +20,9 @@ class TestWWW < Test::Unit::TestCase
     get "http://www.example.com"
     assert last_response.ok?
   end
+
+  def test_redirects_when_not_www
+    get "http://example.com"
+    assert last_response.redirect?
+  end
 end
