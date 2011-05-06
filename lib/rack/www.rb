@@ -23,11 +23,7 @@ module Rack
 
     private
     def already_www?(host)
-      if host.downcase =~ /^(www.)/ 
-        true
-      else
-        false
-      end
+      host.downcase =~ /^(www.)/ 
     end
   end
 end
