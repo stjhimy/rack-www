@@ -1,0 +1,15 @@
+== rack-www
+
+Redirects all trafic from http://example.com to http://www.example.com
+
+=== Installation
+
+  gem install rack-www
+
+=== Usage
+
+  config.middleware.use Rack:WWW
+
+=== License
+
+MIT License. Copyright 2011 Jhimy Fernandes Villar. http://www.stjhimy.com
