@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.files = [
     'lib/rack/www.rb',
     'LICENSE',
-    'README.md'
+    'README.rdoc'
   ]
 
   s.add_dependency 'rack'
