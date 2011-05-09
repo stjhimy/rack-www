@@ -51,4 +51,16 @@ class TestWWW < Test::Unit::TestCase
     get "http://example.com/"
     assert last_response.ok?
   end
+
+  def test_param_message
+    self.app = Rack::WWW.new(default_app, :www => true, :message => "redirecting now!")
+    get "http://example.com/"
+    assert_equal last_response.body, "redirecting now!"
+  end
+
+  def test_when_not_param_message
+    self.app = Rack::WWW.new(default_app, :www => true)
+    get "http://example.com/"
+    assert_equal last_response.body, "Only WWW!"
+  end
 end

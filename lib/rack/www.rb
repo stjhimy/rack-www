@@ -4,9 +4,10 @@ require 'rack/request'
 module Rack
   class WWW
     def initialize(app, options = {})
-      @default_options = {:www => true}
+      @options = {:www => true}.merge(options)
       @app = app
-      @www = @default_options.merge(options)[:www]
+      @www = @options[:www]
+      @message = @options[:message]
     end
 
     def call(env)
@@ -14,11 +15,11 @@ module Rack
       req  = Request.new(env)
       host = URI(req.host).to_s
       if (already_www?(host) && @www == true) || (!already_www?(host) && @www == false)
-        [status, headers, body]
+        [status, headers, @message || body]
       else
         url = prepare_url(req)
         headers = headers.merge('Location' => url)
-        [301, headers, body]
+        [301, headers, @message || body]
       end
     end
 
