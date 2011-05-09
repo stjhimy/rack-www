@@ -15,12 +15,8 @@ module Rack
       host = URI(req.host).to_s
       if (already_www?(host) && @www == true) || (!already_www?(host) && @www == false)
         [status, headers, body]
-      elsif !already_www?(host) && @www == true
-        url = URI(req.url).scheme + "://www." + host + URI(req.path).to_s
-        headers = headers.merge('Location' => url)
-        [301, headers, body]
       else
-        url = URI(req.url).scheme + "://" + host.gsub("www.", "") + URI(req.path).to_s
+        url = prepare_url(req)
         headers = headers.merge('Location' => url)
         [301, headers, body]
       end
@@ -29,6 +25,18 @@ module Rack
     private
     def already_www?(host)
       host.downcase =~ /^(www.)/ 
+    end
+
+    def prepare_url(req)
+      scheme = URI(req.url).scheme 
+      host = URI(req.host).to_s.gsub(/^(www.)/, "")
+      path = URI(req.path).to_s
+      if @www == true
+        host = "://www." + host
+      else
+        host = "://" + host
+      end
+      scheme + host + path
     end
   end
 end
