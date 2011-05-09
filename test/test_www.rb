@@ -36,6 +36,19 @@ class TestWWW < Test::Unit::TestCase
 
   def test_param_www
     self.app = Rack::WWW.new(default_app, :www => true)
+    get "http://example.com/"
+    assert_equal "http://www.example.com/", last_response.headers['Location']
   end
 
+  def test_param_www_false_when_www
+    self.app = Rack::WWW.new(default_app, :www => false)
+    get "http://www.example.com/"
+    assert_equal "http://example.com/", last_response.headers['Location']
+  end
+
+  def test_param_www_false_when_not_www
+    self.app = Rack::WWW.new(default_app, :www => false)
+    get "http://example.com/"
+    assert last_response.ok?
+  end
 end
