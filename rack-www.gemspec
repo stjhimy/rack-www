@@ -1,18 +1,19 @@
 Gem::Specification.new do |s|
   s.name      = 'rack-www'
-  s.version   = '1.0.0'
-  s.date      = '2011-05-06'
+  s.version   = '1.1.0'
+  s.date      = '2011-05-10'
 
   s.homepage    = "https://github.com/stjhimy/rack-www"
-  s.summary     = "Force redirects to www."
+  s.summary     = "Force redirects to a single domain with or without www"
   s.description = <<-EOS
-    Rack middleware to force redirects to www.
+    Rack middleware to force redirects all traffic to a single domain with or without www.
   EOS
 
   s.files = [
     'lib/rack-www.rb',
     'lib/rack/www.rb',
     'LICENSE',
+    'CHANGELOG.rdoc',
     'README.rdoc'
   ]
   s.require_path = 'lib'
