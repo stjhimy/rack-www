@@ -1,0 +1,5 @@
+== 1.1
+* Added possibility to redirects with www or without www.
+* Added possibility to set a param :message to show while redirecting.
+== 1.0
+* Redirects all traffic to www.
