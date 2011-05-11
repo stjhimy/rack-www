@@ -1,6 +1,6 @@
 == rack-www
 
-Redirects all trafic from http://example.com to http://www.example.com
+Rack middleware to force redirects all traffic to a single domain with or without www.
 
 === Installation
 
@@ -12,7 +12,22 @@ Redirects all trafic from http://example.com to http://www.example.com
 
 === Usage
 
+Default usage:
+
+  #redirects all traffic to www
   config.middleware.use Rack::WWW
+
+You can also customize the :www option to true or false:
+
+  #redirects all traffic to www
+  config.middleware.use Rack::WWW, :www => true
+
+  #redirects all traffic to the same domain without www
+  config.middleware.use Rack::WWW, :www => false
+
+If you like it's also possible to show a message while redirecting the user:
+
+  config.middleware.use Rack::WWW, :www => false, :message => "You are being redirected..."
 
 === License
 
