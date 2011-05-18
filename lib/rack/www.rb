@@ -29,12 +29,19 @@ module Rack
       scheme = env["rack.url_scheme"]
       host = env["SERVER_NAME"].gsub(/^(www.)/, "")
       path = env["PATH_INFO"].to_s
+
+      if env["QUERY_STRING"].empty?
+        query_string = ""
+      else
+        query_string = "?" + env["QUERY_STRING"]
+      end
+
       if @www == true
         host = "://www." + host
       else
         host = "://" + host
       end
-      scheme + host + path
+      scheme + host + path + query_string
     end
   end
 end
