@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name      = 'rack-www'
-  s.version   = '1.1.0'
-  s.date      = '2011-05-10'
+  s.version   = '1.2.0'
+  s.date      = '2011-05-17'
 
   s.homepage    = "https://github.com/stjhimy/rack-www"
   s.summary     = "Force redirects to a single domain with or without www"
