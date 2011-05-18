@@ -59,9 +59,9 @@ class TestWWW < ActiveSupport::TestCase
     assert_equal last_response.body, "redirecting now!"
   end
 
-  test "Keeps the body content when not param :message" do
+  test "Keeps the body empty when not param :message" do
     self.app = Rack::WWW.new(default_app, :www => true)
     get "http://example.com/"
-    assert_equal last_response.body, "default body"
+    assert_equal last_response.body, ""
   end
 end

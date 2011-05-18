@@ -11,27 +11,24 @@ module Rack
     end
 
     def call(env)
-      status, headers, body = @app.call(env)
-      req  = Request.new(env)
-      host = URI(req.host).to_s
-      if (already_www?(host) && @www == true) || (!already_www?(host) && @www == false)
-        [status, headers, @message || body]
+      if (already_www?(env) && @www == true) || (!already_www?(env) && @www == false)
+        status, headers, body = @app.call(env)
       else
-        url = prepare_url(req)
-        headers = headers.merge('Location' => url)
-        [301, headers, @message || body]
+        url = prepare_url(env)
+        headers = {"Content-Type" => "text/html", "location" => url}
+        [301, headers, @message || ""]
       end
     end
 
     private
-    def already_www?(host)
-      host.downcase =~ /^(www.)/ 
+    def already_www?(env)
+      env["HTTP_HOST"].downcase =~ /^(www.)/ 
     end
 
-    def prepare_url(req)
-      scheme = URI(req.url).scheme 
-      host = URI(req.host).to_s.gsub(/^(www.)/, "")
-      path = URI(req.path).to_s
+    def prepare_url(env)
+      scheme = env["rack.url_scheme"]
+      host = env["SERVER_NAME"].gsub(/^(www.)/, "")
+      path = env["PATH_INFO"].to_s
       if @www == true
         host = "://www." + host
       else
