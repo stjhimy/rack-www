@@ -65,6 +65,12 @@ class TestWWW < ActiveSupport::TestCase
     assert_equal "http://example.com/path/1", last_response.headers['Location']
   end
 
+  test "Redirects to a non  www url and keep the right query string when param :www => false" do
+    self.app = Rack::WWW.new(default_app, :www => false)
+    get "http://www.example.com/path/1?param=test"
+    assert_equal "http://example.com/path/1?param=test", last_response.headers['Location']
+  end
+  
   test "Keeps the same url when non www url and param :www => false" do
     self.app = Rack::WWW.new(default_app, :www => false)
     get "http://example.com/"
