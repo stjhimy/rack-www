@@ -11,8 +11,8 @@ module Rack
     end
 
     def call(env)
-      if (already_www?(env) && @www == true) || (!already_www?(env) && @www == false)
-        status, headers, body = @app.call(env)
+      if (already_www?(env) && @www) || (!already_www?(env) && !@www)
+        @app.call(env)
       else
         url = prepare_url(env)
         headers = {"Content-Type" => "text/html", "location" => url}
@@ -28,11 +28,10 @@ module Rack
     def prepare_url(env)
       scheme = env["rack.url_scheme"]
       host = env["SERVER_NAME"].gsub(/^(www.)/, "")
-      path = env["PATH_INFO"].to_s
+      path = env["PATH_INFO"]
 
-      if env["QUERY_STRING"].empty?
-        query_string = ""
-      else
+      query_string = ""
+      if !env["QUERY_STRING"].empty?
         query_string = "?" + env["QUERY_STRING"]
       end
 
