@@ -22,6 +22,7 @@ You can also customize the :www option to true or false:
   #redirects all traffic to www
   config.middleware.use Rack::WWW, :www => true
 
+
   #redirects all traffic to the same domain without www
   config.middleware.use Rack::WWW, :www => false
 
