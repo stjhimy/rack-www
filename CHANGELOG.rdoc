@@ -1,10 +1,15 @@
 == 1.2
+
 * Redirects to the right url without calling the app
 * Keep the path when redirecting
 * Keep the query string when redirecting
 * Added more tests
+
 == 1.1
+
 * Added possibility to redirects with www or without www.
 * Added possibility to set a param :message to show while redirecting.
+
 == 1.0
+
 * Redirects all traffic to www.
