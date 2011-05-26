@@ -22,7 +22,7 @@ module Rack
     end
 
     private
-    def already_www?(env)
+    def already_subdomain?(env)
       env["HTTP_HOST"].downcase =~ /^(#{@subdomain}.)/ 
     end
 
