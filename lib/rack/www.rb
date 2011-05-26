@@ -31,7 +31,7 @@ module Rack
       #scheme = env["rack.url_scheme"]
       scheme = @ssl ? "https" : "http"
 
-      host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
+      host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "").gsub(/^(heroku.)/, "")
       path = env["PATH_INFO"]
 
       query_string = ""
