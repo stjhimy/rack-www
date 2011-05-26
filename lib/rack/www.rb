@@ -4,11 +4,12 @@ require 'rack/request'
 module Rack
   class WWW
     def initialize(app, options = {})
-      @options = {:redirect => true, :subdomain => "www"}.merge(options)
+      @options = {:redirect => true, :subdomain => "www", :ssl => "false"}.merge(options)
       @app = app
       @redirect = @options[:redirect]
       @message = @options[:message]
       @subdomain = @options[:subdomain]
+      @ssl = @options[:ssl]
     end
 
     def call(env)
@@ -27,7 +28,9 @@ module Rack
     end
 
     def prepare_url(env)
-      scheme = env["rack.url_scheme"]
+      #scheme = env["rack.url_scheme"]
+      scheme = @ssl ? "https" : "http"
+
       host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
       path = env["PATH_INFO"]
 
