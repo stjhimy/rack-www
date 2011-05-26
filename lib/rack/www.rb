@@ -10,7 +10,7 @@ module Rack
       @message = @options[:message]
       @subdomain = @options[:subdomain]
       @ssl = @options[:ssl]
-      @host = @options[:ssl]
+      #@host = @options[:ssl]
     end
 
     def call(env)
@@ -32,11 +32,7 @@ module Rack
       #scheme = env["rack.url_scheme"]
       scheme = @ssl ? "https" : "http"
 
-      #if @host
-        #host = @host
-      #else
-        host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
-      #end
+      host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
 
       path = env["PATH_INFO"]
 
