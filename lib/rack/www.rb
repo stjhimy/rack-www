@@ -28,7 +28,7 @@ module Rack
 
     def prepare_url(env)
       scheme = env["rack.url_scheme"]
-      host = env["SERVER_NAME"].gsub(/^(www.)/, "")
+      host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
       path = env["PATH_INFO"]
 
       query_string = ""
