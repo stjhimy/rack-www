@@ -10,6 +10,7 @@ module Rack
       @message = @options[:message]
       @subdomain = @options[:subdomain]
       @ssl = @options[:ssl]
+      @host = @options[:ssl]
     end
 
     def call(env)
@@ -31,7 +32,12 @@ module Rack
       #scheme = env["rack.url_scheme"]
       scheme = @ssl ? "https" : "http"
 
-      host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "").gsub(/(heroku.)/, "")
+      if @host
+        host = @host
+      else
+        host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
+      end
+
       path = env["PATH_INFO"]
 
       query_string = ""
@@ -46,5 +52,6 @@ module Rack
       end
       scheme + host + path + query_string
     end
+
   end
 end
