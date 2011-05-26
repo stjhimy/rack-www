@@ -4,7 +4,7 @@ require 'rack/request'
 module Rack
   class WWW
     def initialize(app, options = {})
-      @options = {:redirect => true, :subdomain => "www", :ssl => "false"}.merge(options)
+      @options = {:redirect => true, :subdomain => "www", :ssl => false}.merge(options)
       @app = app
       @redirect = @options[:redirect]
       @message = @options[:message]
