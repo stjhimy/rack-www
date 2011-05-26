@@ -32,11 +32,11 @@ module Rack
       #scheme = env["rack.url_scheme"]
       scheme = @ssl ? "https" : "http"
 
-      if @host
-        host = @host
-      else
+      #if @host
+        #host = @host
+      #else
         host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
-      end
+      #end
 
       path = env["PATH_INFO"]
 
