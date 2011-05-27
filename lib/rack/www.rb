@@ -5,6 +5,7 @@ module Rack
   class WWW
     def initialize(app, options = {})
       @options = {:redirect => true, :subdomain => "www", :ssl => false}.merge(options)
+      @options[:redirect] = @options[:www] if @options[:www] != nil
       @app = app
       @redirect = @options[:redirect]
       @message = @options[:message]
