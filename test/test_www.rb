@@ -88,4 +88,29 @@ class TestWWW < ActiveSupport::TestCase
     get "http://example.com/"
     assert_equal last_response.body, ""
   end
+
+  test 'allows for custom subdomain' do
+    self.app = Rack::WWW.new(default_app, :www => true, :subdomain => "secure")
+    get 'http://example.com'
+    assert_equal 'http://secure.example.com/', last_response.headers['Location']
+  end
+
+  test 'allows use of redirect as alias for www' do
+    self.app = Rack::WWW.new(default_app, :redirect => true, :subdomain => "secure")
+    get 'http://example.com'
+    assert_equal 'http://secure.example.com/', last_response.headers['Location']
+  end
+
+  test 'redirects to a non subdomain if redirect is false' do
+    self.app = Rack::WWW.new(default_app, :redirect => false)
+    get "http://example.com/"
+    assert last_response.ok?
+  end
+
+  test 'Redirects to a non subdomain url and keep the right query string when param :www => false' do
+    self.app = Rack::WWW.new(default_app, :redirect => false)
+    get "http://www.example.com/path/1?param=test"
+    assert_equal "http://example.com/path/1?param=test", last_response.headers['Location']
+  end
+
 end

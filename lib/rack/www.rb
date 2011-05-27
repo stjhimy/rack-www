@@ -11,7 +11,6 @@ module Rack
       @message = @options[:message]
       @subdomain = @options[:subdomain]
       @ssl = @options[:ssl]
-      #@host = @options[:ssl]
     end
 
     def call(env)
