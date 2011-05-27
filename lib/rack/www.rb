@@ -33,7 +33,7 @@ module Rack
       scheme = @ssl ? "https" : "http"
 
       host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
-      puts "#{evn["SERVER_NAME"]} \n"
+      puts "#{env["SERVER_NAME"]} \n"
       puts "#{host} \n"
 
       path = env["PATH_INFO"]
