@@ -4,14 +4,16 @@ require 'rack/request'
 module Rack
   class WWW
     def initialize(app, options = {})
-      @options = {:www => true}.merge(options)
+      @options = {:redirect => true, :subdomain => "www" }.merge(options)
+      @options[:redirect] = @options[:www] if @options[:www] != nil
       @app = app
-      @www = @options[:www]
+      @redirect = @options[:redirect]
       @message = @options[:message]
+      @subdomain = @options[:subdomain]
     end
 
     def call(env)
-      if (already_www?(env) && @www) || (!already_www?(env) && !@www)
+      if (already_subdomain?(env) && @redirect) || (!already_subdomain?(env) && !@redirect)
         @app.call(env)
       else
         url = prepare_url(env)
@@ -21,13 +23,15 @@ module Rack
     end
 
     private
-    def already_www?(env)
-      env["HTTP_HOST"].downcase =~ /^(www.)/ 
+    def already_subdomain?(env)
+      env["HTTP_HOST"].downcase =~ /^(#{@subdomain}.)/ 
     end
 
     def prepare_url(env)
       scheme = env["rack.url_scheme"]
-      host = env["SERVER_NAME"].gsub(/^(www.)/, "")
+
+      host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
+
       path = env["PATH_INFO"]
 
       query_string = ""
@@ -35,12 +39,13 @@ module Rack
         query_string = "?" + env["QUERY_STRING"]
       end
 
-      if @www == true
-        host = "://www." + host
+      if @redirect == true
+        host = "://#{@subdomain}." + host
       else
         host = "://" + host
       end
       scheme + host + path + query_string
     end
+
   end
 end
