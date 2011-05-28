@@ -31,13 +31,13 @@ class SubdomainTest < TestWWW
     assert_equal "http://secure.example.com/path/1?test=true", last_response.headers['Location']
   end
 
-  test "custom subdomain and :message" do
+  test "body with custom subdomain and :message" do
     self.app = Rack::WWW.new(default_app, :subdomain => "secure", :message => "redirecting now!")
     get "http://example.com/"
     assert_equal last_response.body, "redirecting now!"
   end
 
-  test "custom subdomain and :message nil" do
+  test "body with custom subdomain without :message" do
     self.app = Rack::WWW.new(default_app, :subdomain => "secure")
     get "http://example.com/"
     assert_equal last_response.body, ""

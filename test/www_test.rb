@@ -6,65 +6,65 @@ class WWW < TestWWW
     assert_equal last_response.status, 200
   end
 
-  test "response has status 301[redirects] when not www" do
+  test "response has status 301[redirects]" do
     get "http://example.com"
     assert_equal last_response.status, 301
   end
 
-  test "Redirects to right location" do
+  test "redirects to right location" do
     get "http://example.com/"
     assert_equal "http://www.example.com/", last_response.headers['Location']
   end
 
-  test "Redirects to a www url when param :www => true" do
+  test ":www => true" do
     self.app = Rack::WWW.new(default_app, :www => true)
     get "http://example.com/"
     assert_equal "http://www.example.com/", last_response.headers['Location']
   end
 
-  test "Redirects to a www url and keep the right path when param :www => true" do
+  test ":www => true with path" do
     self.app = Rack::WWW.new(default_app, :www => true)
     get "http://example.com/path/1"
     assert_equal "http://www.example.com/path/1", last_response.headers['Location']
   end
 
-  test "Redirects to a www url and keep the right query string when param :www => true" do
+  test ":www => true with query string" do
     self.app = Rack::WWW.new(default_app, :www => true)
     get "http://example.com/path/1?param=test"
     assert_equal "http://www.example.com/path/1?param=test", last_response.headers['Location']
   end
 
-  test "Redirects to a non www url when param :www => false" do
+  test ":www => false" do
     self.app = Rack::WWW.new(default_app, :www => false)
     get "http://www.example.com/"
     assert_equal "http://example.com/", last_response.headers['Location']
   end
 
-  test "Redirects to a non  www url and keep the right path when param :www => false" do
+  test ":www => false with path" do
     self.app = Rack::WWW.new(default_app, :www => false)
     get "http://www.example.com/path/1"
     assert_equal "http://example.com/path/1", last_response.headers['Location']
   end
 
-  test "Redirects to a non  www url and keep the right query string when param :www => false" do
+  test ":www => false with query string" do
     self.app = Rack::WWW.new(default_app, :www => false)
     get "http://www.example.com/path/1?param=test"
     assert_equal "http://example.com/path/1?param=test", last_response.headers['Location']
   end
   
-  test "Keeps the same url when non www url and param :www => false" do
+  test ":www => false and non www url" do
     self.app = Rack::WWW.new(default_app, :www => false)
     get "http://example.com/"
     assert last_response.ok?
   end
 
-  test "Changes the body content when param :message" do
+  test "body with :message" do
     self.app = Rack::WWW.new(default_app, :www => true, :message => "redirecting now!")
     get "http://example.com/"
     assert_equal last_response.body, "redirecting now!"
   end
 
-  test "Keeps the body empty when there's not a :message param" do
+  test "body without :message" do
     self.app = Rack::WWW.new(default_app, :www => true)
     get "http://example.com/"
     assert_equal last_response.body, ""
