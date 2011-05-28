@@ -32,6 +32,7 @@ module Rack
       scheme = env["rack.url_scheme"]
 
       host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
+      host = host.gsub(/^(www.)/, "")
 
       path = env["PATH_INFO"]
 
