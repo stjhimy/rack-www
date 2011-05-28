@@ -1,6 +1,6 @@
-== rack-www
+= rack-www
 
-Rack middleware to force redirects all traffic to a single domain with or without www.
+Rack middleware to force subdomain redirects, e.g: www.
 
 === Installation
 
@@ -10,14 +10,15 @@ Rack middleware to force redirects all traffic to a single domain with or withou
   #when using bundler
   gem 'rack-www'
 
+
 === Usage
 
-Default usage:
+Default usage (by default will redirect all requests to www subdomain):
 
-  #redirects all traffic to www
+  #redirects all traffic to www subdomain
   config.middleware.use Rack::WWW
 
-You can also customize the :www option to true or false:
+Customizing the :www option to true or false:
 
   #redirects all traffic to www
   config.middleware.use Rack::WWW, :www => true
@@ -26,9 +27,22 @@ You can also customize the :www option to true or false:
   #redirects all traffic to the same domain without www
   config.middleware.use Rack::WWW, :www => false
 
+Redirecting to a given subdomain:
+
+  #redirects all traffic to the 'secure' subdomain
+  config.middleware.use Rack::WWW, :subdomain => "secure"
+
 If you like it's also possible to show a message while redirecting the user:
 
   config.middleware.use Rack::WWW, :www => false, :message => "You are being redirected..."
+
+
+=== Options
+
+* :www => default is true, redirects all traffic to www;
+* :subdomain => redirects to any given subdomain;
+* :message => display a message while redirecting;
+
 
 === License
 
