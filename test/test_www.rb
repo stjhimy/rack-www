@@ -83,32 +83,20 @@ class TestWWW < ActiveSupport::TestCase
     assert_equal last_response.body, "redirecting now!"
   end
 
-  test "Keeps the body empty when not param :message" do
+  test "Keeps the body empty when there's not a :message param" do
     self.app = Rack::WWW.new(default_app, :www => true)
     get "http://example.com/"
     assert_equal last_response.body, ""
   end
 
   test 'allows for custom subdomain' do
-    self.app = Rack::WWW.new(default_app, :www => true, :subdomain => "secure")
+    self.app = Rack::WWW.new(default_app, :subdomain => "secure")
     get 'http://example.com'
     assert_equal 'http://secure.example.com/', last_response.headers['Location']
-  end
-
-  test 'allows use of redirect as alias for www' do
-    self.app = Rack::WWW.new(default_app, :redirect => true, :subdomain => "secure")
-    get 'http://example.com'
-    assert_equal 'http://secure.example.com/', last_response.headers['Location']
-  end
-
-  test 'redirects to a non subdomain if redirect is false' do
-    self.app = Rack::WWW.new(default_app, :redirect => false)
-    get "http://example.com/"
-    assert last_response.ok?
   end
 
   test 'Redirects to a non subdomain url and keep the right query string when param :www => false' do
-    self.app = Rack::WWW.new(default_app, :redirect => false)
+    self.app = Rack::WWW.new(default_app, :www => false)
     get "http://www.example.com/path/1?param=test"
     assert_equal "http://example.com/path/1?param=test", last_response.headers['Location']
   end
