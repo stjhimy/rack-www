@@ -1,17 +1,17 @@
 require "helper"
 
 class WWW < TestWWW
-  test "response has status 200[ok] in the default request" do
+  test "response has status 200[ok]" do
     get "http://www.example.com"
     assert_equal last_response.status, 200
   end
 
-  test "response has status 301[redirects] when not a www url" do
+  test "response has status 301[redirects] when not www" do
     get "http://example.com"
     assert_equal last_response.status, 301
   end
 
-  test "Redirects to right location when it's not www url" do
+  test "Redirects to right location" do
     get "http://example.com/"
     assert_equal "http://www.example.com/", last_response.headers['Location']
   end
