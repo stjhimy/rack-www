@@ -4,9 +4,9 @@ Gem::Specification.new do |s|
   s.date      = '2011-05-17'
 
   s.homepage    = "https://github.com/stjhimy/rack-www"
-  s.summary     = "Force redirects to a single domain with or without www"
+  s.summary     = "Force redirects to a any given subdomain, e.g: www."
   s.description = <<-EOS
-    Rack middleware to force redirects all traffic to a single domain with or without www.
+    Rack middleware to force subdomain redirects, e.g: www.
   EOS
 
   s.files = [
