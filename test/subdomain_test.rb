@@ -42,5 +42,16 @@ class SubdomainTest < TestWWW
     get "http://example.com/"
     assert_equal last_response.body, ""
   end
-  
+
+  test "should respect server port" do
+    get "http://example.com:8080/"
+    assert_equal "http://www.example.com:8080/",
+                 last_response.headers['Location']
+  end
+
+  test "should not display port 80 which is the default anyway" do
+    get "http://example.com:80/"
+    assert_equal "http://www.example.com/",
+                 last_response.headers['Location']
+  end
 end

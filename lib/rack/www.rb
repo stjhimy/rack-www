@@ -34,6 +34,12 @@ module Rack
       host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
       host = host.gsub(/^(www.)/, "")
 
+      port = if env['SERVER_PORT'] == '80'
+               ''
+             else
+               ":#{env['SERVER_PORT']}"
+             end
+
       path = env["PATH_INFO"]
 
       query_string = ""
@@ -46,7 +52,7 @@ module Rack
       else
         host = "://" + host
       end
-      scheme + host + path + query_string
+      scheme + host + port + path + query_string
     end
 
   end
