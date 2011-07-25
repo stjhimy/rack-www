@@ -16,7 +16,7 @@ class TestWWW < ActiveSupport::TestCase
   end
 
   def app
-    @app ||= Rack::WWW.new(default_app)
+    @app ||= Rack::Lint.new(Rack::WWW.new(default_app))
   end
   attr_writer :app
 end
