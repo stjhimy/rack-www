@@ -52,7 +52,7 @@ module Rack
       else
         host = "://" + host
       end
-      scheme + host + port + path + query_string
+      "#{scheme}#{host}#{port}#{path}#{query_string}"
     end
 
   end
