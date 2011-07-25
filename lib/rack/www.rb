@@ -19,13 +19,18 @@ module Rack
       else
         url = prepare_url(env)
         headers = {"Content-Type" => "text/html", "location" => url}
-        [301, headers, @message || ""]
+        message = if @message.respond_to?(:each)
+                    @message
+                  else
+                    [@message || '']
+                  end
+        [301, headers, message]
       end
     end
 
     private
     def already_subdomain?(env)
-      env["HTTP_HOST"].downcase =~ /^(#{@subdomain}.)/ 
+      env["HTTP_HOST"].downcase =~ /^(#{@subdomain}.)/
     end
 
     def prepare_url(env)
