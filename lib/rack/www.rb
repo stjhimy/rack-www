@@ -19,11 +19,11 @@ module Rack
       else
         url = prepare_url(env)
         headers = {"Content-Type" => "text/html", "location" => url}
-        message = if @message.respond_to?(:each)
-                    @message
-                  else
-                    [@message || '']
-                  end
+        if @message.respond_to?(:each)
+          message = @message
+        else
+          message = [@message || '']
+        end
         [301, headers, message]
       end
     end
@@ -39,11 +39,11 @@ module Rack
       host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
       host = host.gsub(/^(www.)/, "")
 
-      port = if env['SERVER_PORT'] == '80'
-               ''
-             else
-               ":#{env['SERVER_PORT']}"
-             end
+      if env['SERVER_PORT'] == '80'
+        port = ''
+      else
+        port = ":#{env['SERVER_PORT']}"
+      end
 
       path = env["PATH_INFO"]
 
@@ -59,6 +59,5 @@ module Rack
       end
       "#{scheme}#{host}#{port}#{path}#{query_string}"
     end
-
   end
 end
