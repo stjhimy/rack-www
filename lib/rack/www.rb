@@ -11,24 +11,48 @@ module Rack
       @redirect = @options[:www] if @options[:www] != nil
       @message = @options[:message]
       @subdomain = @options[:subdomain]
+      @predicate = @options[:predicate]
     end
 
     def call(env)
-      if (already_subdomain?(env) && @redirect) || (!already_subdomain?(env) && !@redirect)
-        @app.call(env)
+      if redirect?(env)
+        redirect(env)
       else
-        url = prepare_url(env)
-        headers = {"Content-Type" => "text/html", "location" => url}
-        if @message.respond_to?(:each)
-          message = @message
-        else
-          message = [@message || '']
-        end
-        [301, headers, message]
+        @app.call(env)
       end
     end
 
     private
+
+    def redirect(env)
+      url = prepare_url(env)
+      headers = {"Content-Type" => "text/html", "location" => url}
+
+      if @message.respond_to?(:each)
+        message = @message
+      else
+        message = [@message || '']
+      end
+      [301, headers, message]
+    end
+
+    def redirect?(env)
+      predicate?(env) && change_subdomain?(env)
+    end
+
+    def predicate?(env)
+      if @predicate
+        @predicate.call env
+      else
+        true
+      end
+    end
+
+    def change_subdomain?(env)
+      @redirect && !already_subdomain?(env) ||
+      !@redirect && already_subdomain?(env)
+    end
+
     def already_subdomain?(env)
       env["HTTP_HOST"].downcase =~ /^(#{@subdomain}.)/
     end
