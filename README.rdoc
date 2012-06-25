@@ -36,6 +36,12 @@ If you like it's also possible to show a message while redirecting the user:
 
   config.middleware.use Rack::WWW, :www => false, :message => "You are being redirected..."
 
+You can optionally specify predicate to determine if redirect should take place:
+
+  config.middleware.use Rack::WWW, :predicate => lambda { |env|
+    !Rack::Request.new(env).params.has_key? "noredirect"
+  }
+
 
 === Options
 
