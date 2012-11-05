@@ -4,7 +4,7 @@ require 'rack/request'
 module Rack
   class WWW
     def initialize(app, options = {})
-      @options = {:subdomain => "www" }.merge(options)
+      @options = {:subdomain => "www"}.merge(options)
       @app = app
 
       @redirect = true
@@ -54,14 +54,14 @@ module Rack
     end
 
     def already_subdomain?(env)
-      env["HTTP_HOST"].downcase =~ /^(#{@subdomain}.)/
+      env["HTTP_HOST"].downcase =~ /^(#{@subdomain}\.)/
     end
 
     def prepare_url(env)
       scheme = env["rack.url_scheme"]
 
-      host = env["SERVER_NAME"].gsub(/^(#{@subdomain}.)/, "")
-      host = host.gsub(/^(www.)/, "")
+      host = env["SERVER_NAME"].gsub(/^(#{@subdomain}\.)/, "")
+      host = host.gsub(/^(www\.)/, "")
 
       if env['SERVER_PORT'] == '80'
         port = ''
