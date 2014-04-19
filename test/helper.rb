@@ -1,6 +1,5 @@
-require "rubygems"
 require "rack/www"
-require 'test/unit'
+require 'minitest/autorun'
 require 'active_support'
 require 'rack/test'
 
