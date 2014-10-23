@@ -54,25 +54,17 @@ module Rack
     end
 
     def already_subdomain?(env)
-      env["HTTP_HOST"].downcase =~ /^(#{@subdomain}\.)/
+      env["HTTP_HOST"].to_s.downcase =~ /^(#{@subdomain}\.)/
     end
 
     def prepare_url(env)
       scheme = env["rack.url_scheme"]
-
-      host = env["SERVER_NAME"].gsub(/^(#{@subdomain}\.)/, "")
-      host = host.gsub(/^(www\.)/, "")
-
-      if env['SERVER_PORT'] == '80'
-        port = ''
-      else
-        port = ":#{env['SERVER_PORT']}"
-      end
-
+      host = env["SERVER_NAME"].to_s.gsub(/^(#{@subdomain}\.)/, "").host.gsub(/^(www\.)/, "")
+      port = env['SERVER_PORT'] == '80' ? '' : ":#{env['SERVER_PORT']}"
       path = env["PATH_INFO"]
 
       query_string = ""
-      if !env["QUERY_STRING"].empty?
+      unless env["QUERY_STRING"].empty?
         query_string = "?" + env["QUERY_STRING"]
       end
 
