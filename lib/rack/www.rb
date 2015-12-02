@@ -59,7 +59,7 @@ module Rack
 
     def prepare_url(env)
       scheme = env["rack.url_scheme"]
-      host = env["SERVER_NAME"].to_s.gsub(/^(#{@subdomain}\.)/, "").host.gsub(/^(www\.)/, "")
+      host = env["SERVER_NAME"].to_s.gsub(/^(#{@subdomain}\.)/, "").gsub(/^(www\.)/, "")
       port = env['SERVER_PORT'] == '80' ? '' : ":#{env['SERVER_PORT']}"
       path = env["PATH_INFO"]
 
