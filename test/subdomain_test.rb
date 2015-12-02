@@ -1,43 +1,43 @@
 require "helper"
 
 class SubdomainTest < TestWWW
-  test 'allow custom subdomain' do
+  def test_if_allow_custom_subdomain
     self.app = Rack::WWW.new(default_app, :subdomain => "secure")
     get 'http://example.com'
     assert_equal 'http://secure.example.com/', last_response.headers['Location']
   end
 
-  test "custom subdomain with path" do
+  def test_custom_subdomain_with_path
     self.app = Rack::WWW.new(default_app, :subdomain => "secure")
     get "http://example.com/path/1"
     assert_equal "http://secure.example.com/path/1", last_response.headers['Location']
   end
 
-  test "custom subdomain with path and www" do
+  def test_custom_subdomain_with_path_and_www
     self.app = Rack::WWW.new(default_app, :subdomain => "secure")
     get "http://www.example.com/path/1"
     assert_equal "http://secure.example.com/path/1", last_response.headers['Location']
   end
 
-  test "custom subdomain with query string" do
+  def test_custom_subdomain_with_query
     self.app = Rack::WWW.new(default_app, :subdomain => "secure")
     get "http://example.com/path/1?test=true"
     assert_equal "http://secure.example.com/path/1?test=true", last_response.headers['Location']
   end
 
-  test "custom subdomain with query string and www" do
+  def test_custom_subdomain_with_query_and_www
     self.app = Rack::WWW.new(default_app, :subdomain => "secure")
     get "http://www.example.com/path/1?test=true"
     assert_equal "http://secure.example.com/path/1?test=true", last_response.headers['Location']
   end
 
-  test "body with custom subdomain and :message" do
+  def test_body_with_custom_subdomain_and_message
     self.app = Rack::WWW.new(default_app, :subdomain => "secure", :message => "redirecting now!")
     get "http://example.com/"
     assert_equal last_response.body, "redirecting now!"
   end
 
-  test "body with custom subdomain without :message" do
+  def test_body_with_custom_subdomain_without_message
     self.app = Rack::WWW.new(default_app, :subdomain => "secure")
     get "http://example.com/"
     assert_equal last_response.body, ""

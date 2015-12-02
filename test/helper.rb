@@ -1,9 +1,8 @@
 require "rack/www"
 require 'minitest/autorun'
-require 'active_support'
 require 'rack/test'
 
-class TestWWW < ActiveSupport::TestCase
+class TestWWW < MiniTest::Test
   include Rack::Test::Methods
 
   def default_app
@@ -17,5 +16,6 @@ class TestWWW < ActiveSupport::TestCase
   def app
     @app ||= Rack::Lint.new(Rack::WWW.new(default_app))
   end
+
   attr_writer :app
 end
