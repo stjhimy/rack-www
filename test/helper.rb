@@ -2,7 +2,7 @@ require "rack/www"
 require 'minitest/autorun'
 require 'rack/test'
 
-class TestWWW < MiniTest::Test
+class TestClass < MiniTest::Test
   include Rack::Test::Methods
 
   def default_app

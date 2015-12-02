@@ -7,8 +7,7 @@ module Rack
       @options = {:subdomain => "www"}.merge(options)
       @app = app
 
-      @redirect = true
-      @redirect = @options[:www] if @options[:www] != nil
+      @redirect = @options[:www] != nil ? @options[:www] : true
       @message = @options[:message]
       @subdomain = @options[:subdomain]
       @predicate = @options[:predicate]
@@ -50,7 +49,7 @@ module Rack
 
     def change_subdomain?(env)
       @redirect && !already_subdomain?(env) ||
-      !@redirect && already_subdomain?(env)
+        !@redirect && already_subdomain?(env)
     end
 
     def already_subdomain?(env)
@@ -63,7 +62,6 @@ module Rack
       port = env['SERVER_PORT'] == '80' ? '' : ":#{env['SERVER_PORT']}"
       path = env["PATH_INFO"]
 
-      query_string = ""
       unless env["QUERY_STRING"].empty?
         query_string = "?" + env["QUERY_STRING"]
       end
@@ -73,6 +71,7 @@ module Rack
       else
         host = "://" + host
       end
+
       "#{scheme}#{host}#{port}#{path}#{query_string}"
     end
   end
