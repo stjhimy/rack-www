@@ -18,7 +18,10 @@ Gem::Specification.new do |s|
   ]
   s.require_path = 'lib'
 
-  s.add_dependency 'rack'
+  s.add_runtime_dependency 'rack'
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'rack-test'
+  s.add_development_dependency 'minitest'
 
   s.authors           = ["Jhimy Fernandes Villar"]
   s.email             = "stjhimy@gmail.com"
