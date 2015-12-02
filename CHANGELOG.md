@@ -1,3 +1,7 @@
+## 2.0
+
+- Update EVERYTHING
+
 ## 1.5
 
 - Bug fixes

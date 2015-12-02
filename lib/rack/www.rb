@@ -22,7 +22,6 @@ module Rack
     end
 
     private
-
     def redirect(env)
       url = prepare_url(env)
       headers = {"Content-Type" => "text/html", "location" => url}

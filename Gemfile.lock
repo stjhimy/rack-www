@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    rack-www (1.5.0)
-      rack
+    rack-www (2.0.0)
+      rack (~> 1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -17,10 +17,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  minitest
-  rack-test
+  minitest (~> 5.8)
+  rack-test (~> 0.6)
   rack-www!
-  rake
+  rake (~> 10.4)
 
 BUNDLED WITH
    1.10.6

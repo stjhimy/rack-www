@@ -1,6 +1,6 @@
 ## rack-www
 
-Rack middleware to force subdomain redirects, e.g: www.
+Rack middleware to force subdomain redirects, e.g: www or www2
 
 ### Installation
 
@@ -25,11 +25,11 @@ Customizing the :www option to true or false:
 
 ```ruby
   #redirects all traffic to www
-  config.middleware.use Rack::WWW, :www => true
+  config.middleware.use Rack::WWW, www: true
 
 
   #redirects all traffic to the same domain without www
-  config.middleware.use Rack::WWW, :www => false
+  config.middleware.use Rack::WWW, www: false
 ```
 
 Redirecting to a given subdomain:
@@ -52,7 +52,6 @@ You can optionally specify predicate to determine if redirect should take place:
     !Rack::Request.new(env).params.has_key? "noredirect"
   }
 ```
-
 
 ### Options
 
