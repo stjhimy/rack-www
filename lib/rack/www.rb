@@ -3,12 +3,13 @@ require 'rack/request'
 require 'ipaddr'
 
 module Rack
+  # Rack::WWW
   class WWW
     def initialize(app, options = {})
-      @options = {:subdomain => "www"}.merge(options)
+      @options = { subdomain: 'www' }.merge(options)
       @app = app
 
-      @redirect = @options[:www] != nil ? @options[:www] : true
+      @redirect = !@options[:www].nil? ? @options[:www] : true
       @message = @options[:message]
       @subdomain = @options[:subdomain]
       @predicate = @options[:predicate]
@@ -23,9 +24,10 @@ module Rack
     end
 
     private
+
     def redirect(env)
       url = prepare_url(env)
-      headers = {"Content-Type" => "text/html", "location" => url}
+      headers = { 'Content-Type' => 'text/html', 'location' => url }
 
       if @message.respond_to?(:each)
         message = @message
@@ -53,30 +55,35 @@ module Rack
     end
 
     def ip_request?(env)
-      IPAddr.new(env["SERVER_NAME"].to_s.gsub(/^(#{@subdomain}\.)/, "").gsub(/^(www\.)/, "")) rescue false
+      IPAddr.new(env['SERVER_NAME'].to_s
+        .gsub(/^(#{@subdomain}\.)/, '')
+        .gsub(/^(www\.)/, ''))
+    rescue IPAddr::InvalidAddressError
+      false
     end
 
     def already_subdomain?(env)
-      env["HTTP_HOST"].to_s.downcase =~ /^(#{@subdomain}\.)/
+      env['HTTP_HOST'].to_s.downcase =~ /^(#{@subdomain}\.)/
     end
 
     def prepare_url(env)
-      scheme = env["rack.url_scheme"]
-      host = env["SERVER_NAME"].to_s.gsub(/^(#{@subdomain}\.)/, "").gsub(/^(www\.)/, "")
-      port = env['SERVER_PORT'] == '80' ? '' : ":#{env['SERVER_PORT']}"
-      path = env["PATH_INFO"]
-
-      unless env["QUERY_STRING"].empty?
-        query_string = "?" + env["QUERY_STRING"]
-      end
+      scheme = env['rack.url_scheme']
+      host, port, path, query_string = extract_host(env)
 
       if @redirect == true
         host = "://#{@subdomain}." + host
       else
-        host = "://" + host
+        host = '://' + host
       end
 
       "#{scheme}#{host}#{port}#{path}#{query_string}"
+    end
+
+    def extract_host(env)
+      [env['SERVER_NAME'].to_s.gsub(/^(#{@subdomain}\.|www\.)/, ''),
+       env['SERVER_PORT'] == '80' ? '' : ":#{env['SERVER_PORT']}",
+       env['PATH_INFO'],
+       env['QUERY_STRING'].empty? ? '' : '?' + env['QUERY_STRING'].to_s]
     end
   end
 end
