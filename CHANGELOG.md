@@ -1,3 +1,7 @@
+## 2.1
+
+- Ignore rack-www when request host is an IP address
+
 ## 2.0
 
 - Update EVERYTHING
