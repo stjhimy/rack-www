@@ -13,7 +13,14 @@ class PredicateTest < TestClass
     assert_equal "http://www.example.com/", last_response.headers['Location']
   end
 
+  def test_ignore_www_when_ip_request
+    get "http://111.111.111.111/"
+    assert_equal last_response.status, 200
+    assert_equal "", last_response.headers["Location"].to_s
+  end
+
   private
+
   def get_example
     get "http://example.com/"
   end

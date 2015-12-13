@@ -1,5 +1,6 @@
 require 'rack'
 require 'rack/request'
+require 'ipaddr'
 
 module Rack
   class WWW
@@ -35,7 +36,7 @@ module Rack
     end
 
     def redirect?(env)
-      predicate?(env) && change_subdomain?(env)
+      predicate?(env) && change_subdomain?(env) && !ip_request?(env)
     end
 
     def predicate?(env)
@@ -49,6 +50,10 @@ module Rack
     def change_subdomain?(env)
       @redirect && !already_subdomain?(env) ||
         !@redirect && already_subdomain?(env)
+    end
+
+    def ip_request?(env)
+      IPAddr.new(env["SERVER_NAME"].to_s.gsub(/^(#{@subdomain}\.)/, "").gsub(/^(www\.)/, "")) rescue false
     end
 
     def already_subdomain?(env)

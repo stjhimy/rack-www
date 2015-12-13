@@ -24,4 +24,10 @@ class FalseWWW < TestClass
     get "http://example.com/"
     assert last_response.ok?
   end
+
+  def test_ignore_www_when_ip_request
+    get "http://111.111.111.111/"
+    assert_equal last_response.status, 200
+    assert_equal "", last_response.headers["Location"].to_s
+  end
 end
