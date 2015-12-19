@@ -48,6 +48,13 @@ class SubdomainTest < TestClass
     assert_equal last_response.body, ''
   end
 
+  def test_multiple_subdomains
+    self.app = Rack::WWW.new(default_app, subdomain: 'foo.bar')
+    get 'http://example.com/'
+    assert_equal 'http://foo.bar.example.com/',
+                 last_response.headers['Location']
+  end
+
   def test_ignore_www_when_ip_request
     get 'http://111.111.111.111/'
     assert_equal last_response.status, 200
