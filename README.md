@@ -53,6 +53,8 @@ You can optionally specify predicate to determine if redirect should take place:
   }
 ```
 
+It ignores any redirects when using IP addresses.
+
 ### Options
 
 - :www => default is true, redirects all traffic to www;
