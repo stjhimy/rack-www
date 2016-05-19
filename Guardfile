@@ -1,5 +1,4 @@
 guard :minitest do
-  # with Minitest::Unit
   watch(%r{^(.*)\/?.rb$}) { 'test' }
 end
 
