@@ -32,3 +32,4 @@ build/
 /vagrant/.vagrant/
 
 /lib/stokstad/config/mongoid.yml
+Gemfile.lock
