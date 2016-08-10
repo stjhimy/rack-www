@@ -25,6 +25,11 @@ class TrueWWW < TestClass
     assert_equal 'http://www.example.com/', last_response.headers['Location']
   end
 
+  def test_www_true_with_ssl
+    get 'https://example.com/'
+    assert_equal 'https://www.example.com/', last_response.headers['Location']
+  end
+
   def test_www_true_with_path
     get 'http://example.com/path/1'
     assert_equal 'http://www.example.com/path/1',

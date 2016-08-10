@@ -11,6 +11,12 @@ class FalseWWW < TestClass
                  last_response.headers['Location']
   end
 
+  def test_www_false_with_ssl
+    get 'https://www.example.com/'
+    assert_equal 'https://example.com/',
+                 last_response.headers['Location']
+  end
+
   def test_www_false_with_path
     get 'http://www.example.com/path/1'
     assert_equal 'http://example.com/path/1',
