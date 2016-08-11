@@ -1,38 +1,54 @@
-## 2.1
+Changelog
+=========
 
-- Ignore rack-www when request host is an IP address
+Version 2.2.0 (August 11, 2016)
+-----------------------------
 
-## 2.0
+* Do not append port for SSL redirect
 
-- Update EVERYTHING
+Version 2.1.0
+-----------------------------
 
-## 1.5
+* Ignore rack-www when request host is an IP address
 
-- Bug fixes
+Version 2.0.0
+-----------------------------
 
-## 1.4
+* Update EVERYTHING
 
-- Respect server port
-- Body responds to :each
-- Rack::Lint on tests
+Version 1.5
+-----------------------------
 
-## 1.3
+* Bug fixes
 
-- Added possibility to redirects to any given :subdomain [Ryan Weald (https://github.com/rweald)]
-- Added more tests
+Version 1.4
+-----------------------------
 
-## 1.2
+* Respect server port
+* Body responds to :each
+* Rack::Lint on tests
 
-- Redirects to the right url without calling the app
-- Keep the path when redirecting
-- Keep the query string when redirecting
-- Added more tests
+Version 1.3
+-----------------------------
 
-## 1.1
+* Added possibility to redirect to any given :subdomain [Ryan Weald (https://github.com/rweald)]
+* Added more tests
 
-- Added possibility to redirects with www or without www
-- Added possibility to set a param :message to show while redirecting
+Version 1.2
+-----------------------------
 
-## 1.0
+* Redirects to the right url without calling the app
+* Keep the path when redirecting
+* Keep the query string when redirecting
+* Added more tests
 
-- Redirects all traffic to www
+Version 1.1
+-----------------------------
+
+* Added possibility to redirects with www or without www
+* Added possibility to set a param :message to show while redirecting
+
+Version 1.0
+-----------------------------
+
+* Redirects all traffic to www
