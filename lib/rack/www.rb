@@ -81,7 +81,7 @@ module Rack
 
     def extract_host(env)
       [env['SERVER_NAME'].to_s.gsub(/^(#{@subdomain}\.|www\.)/, ''),
-       ['80', '443'].include?(env['SERVER_PORT']) ? '' : ":#{env['SERVER_PORT']}",
+       %w(80 443).include?(env['SERVER_PORT']) ? '' : ":#{env['SERVER_PORT']}",
        env['PATH_INFO'],
        env['QUERY_STRING'].empty? ? '' : '?' + env['QUERY_STRING'].to_s]
     end
