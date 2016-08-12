@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/stjhimy/rack-www.svg?branch=master)](https://travis-ci.org/stjhimy/rack-www)
+
 ## rack-www
 
 Rack middleware to force subdomain redirects, e.g: www or www2
