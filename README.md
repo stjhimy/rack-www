@@ -64,4 +64,4 @@ It ignores any redirects when using IP addresses.
 
 ### License
 
-MIT License. Copyright 2011 Jhimy Fernandes Villar http://stjhimy.com
+MIT License. Copyright Jhimy Fernandes Villar http://stjhimy.com
