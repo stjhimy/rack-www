@@ -12,6 +12,7 @@ module Rack
       @redirect = !@options[:www].nil? ? @options[:www] : true
       @message = @options[:message]
       @subdomain = @options[:subdomain]
+      @host_regex = @options[:host_regex] || /.+/i
       @predicate = @options[:predicate]
     end
 
@@ -38,7 +39,8 @@ module Rack
     end
 
     def redirect?(env)
-      predicate?(env) && change_subdomain?(env) && !ip_request?(env)
+      predicate?(env) && change_subdomain?(env) && !ip_request?(env) &&
+        matches_host?(env)
     end
 
     def predicate?(env)
@@ -64,6 +66,10 @@ module Rack
 
     def already_subdomain?(env)
       env['HTTP_HOST'].to_s.downcase =~ /^(#{@subdomain}\.)/
+    end
+
+    def matches_host?(env)
+      env['HTTP_HOST'].to_s.downcase =~ @host_regex
     end
 
     def prepare_url(env)
