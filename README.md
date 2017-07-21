@@ -55,6 +55,13 @@ You can optionally specify predicate to determine if redirect should take place:
   }
 ```
 
+Specifying host-regex to determine on what hosts to redirect:
+
+```ruby
+  config.middleware.use Rack::WWW, :host_regex => /example/i
+```
+This will only redirect when the host matches `example`, such as `example.com` or `example1.com`. It won't redirect on `localhost` or any other host that does not match the regex
+
 It ignores any redirects when using IP addresses.
 
 ### Options
