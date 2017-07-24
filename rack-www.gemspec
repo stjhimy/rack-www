@@ -1,7 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'rack-www'
-  s.version     = '2.2.0'
-  s.date        = '2015-12-02'
+  s.version     = '2.3.0'
   s.homepage    = 'https://github.com/stjhimy/rack-www'
   s.email       = 'stjhimy@gmail.com'
   s.summary     = 'Force redirects to a any given subdomain.'

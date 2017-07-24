@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Version 2.3.0 (July 17, 2017)
+-----------------------------
+
+* Allow host-regex option
+
 Version 2.2.0 (August 11, 2016)
 -----------------------------
 
