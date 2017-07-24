@@ -1,25 +1,20 @@
 [![Build Status](https://travis-ci.org/stjhimy/rack-www.svg?branch=master)](https://travis-ci.org/stjhimy/rack-www)
 
-## rack-www
+# rack-www
 
 Rack middleware to force subdomain redirects, e.g: www or www2
 
-### Installation
+## Installation
 
 ```ruby
-  #default installation
-  gem install rack-www
-
-  #when using bundler
   gem 'rack-www'
 ```
 
-### Usage
+## Usage
 
-Default usage (by default will redirect all requests to www subdomain):
+Usage (by default it will redirect all requests to www subdomain):
 
 ```ruby
-  #redirects all traffic to www subdomain
   config.middleware.use Rack::WWW
 ```
 
@@ -37,7 +32,6 @@ Customizing the :www option to true or false:
 Redirecting to a given subdomain:
 
 ```ruby
-  #redirects all traffic to the 'secure' subdomain
   config.middleware.use Rack::WWW, :subdomain => "secure"
 ```
 
@@ -60,17 +54,18 @@ Specifying host-regex to determine on what hosts to redirect:
 ```ruby
   config.middleware.use Rack::WWW, :host_regex => /example/i
 ```
+
 This will only redirect when the host matches `example`, such as `example.com` or `example1.com`. It won't redirect on `localhost` or any other host that does not match the regex
 
 It ignores any redirects when using IP addresses.
 
-### Options
+## Options
 
 - :www => default is true, redirects all traffic to www;
 - :subdomain => redirects to any given subdomain;
 - :message => display a message while redirecting;
+- :host_regex => redirects if the given host match
 
-
-### License
+## License
 
 MIT License. Copyright Jhimy Fernandes Villar http://stjhimy.com
